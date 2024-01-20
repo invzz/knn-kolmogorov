@@ -1,0 +1,137 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "includes/algorithms/knn/libknn.a"
+		}
+	],
+	"backtrace" : 2,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"_add_library",
+			"add_library",
+			"target_link_libraries",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"/home/invzz/vcpkg/scripts/buildsystems/vcpkg.cmake",
+			"includes/algorithms/knn/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 18,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 639,
+				"parent" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 19,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 8,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 4,
+					"path" : "/home/invzz/git/KNN/includes/models/inc"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/invzz/git/KNN/includes/algorithms/knn/inc"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/invzz/git/KNN/includes/algorithms/knn/src"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 3,
+			"id" : "category-handler::@5bf6118304086335b41a"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "data-handler::@64e141c9998687efa0ed"
+		}
+	],
+	"id" : "knn::@1f8cf3be0aa677ba04f3",
+	"name" : "knn",
+	"nameOnDisk" : "libknn.a",
+	"paths" : 
+	{
+		"build" : "includes/algorithms/knn",
+		"source" : "includes/algorithms/knn"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "includes/algorithms/knn/src/knn.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "includes/algorithms/knn/inc/knn.h",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}
