@@ -49,3 +49,15 @@
 0	48	1705766701634103769	includes/algorithms/knn/CMakeFiles/knn.dir/src/knn.c.o	de710ea1483efb61
 48	86	1705766701674103752	includes/algorithms/knn/libknn.a	8e1520f685e953c4
 86	225	1705766701814103697	dist/KNN_APP	267ad56beec0b855
+11	123	1705767784785615131	apps/CMakeFiles/KNN_APP.dir/knn.c.o	94afda34dacca0eb
+10	123	1705767784785615131	includes/category-handler/CMakeFiles/category-handler.dir/src/category-handler.c.o	ec18c9cbe08f298b
+11	124	1705767784785615131	includes/data-handler/CMakeFiles/data-handler.dir/src/data-handler.c.o	f8bbc8c983835015
+11	127	1705767784785615131	includes/algorithms/knn/CMakeFiles/knn.dir/src/knn.c.o	de710ea1483efb61
+123	195	1705767784855615103	includes/category-handler/libcategory-handler.a	942cb1d2bdd25070
+195	223	1705767784885615092	includes/data-handler/libdata-handler.a	7d7b78a31af3227
+223	250	1705767784905615086	includes/algorithms/knn/libknn.a	8e1520f685e953c4
+250	588	1705767785245614952	dist/KNN_APP	267ad56beec0b855
+0	19	1705767801355608728	apps/CMakeFiles/KNN_APP.dir/knn.c.o	94afda34dacca0eb
+19	1116	1705767802445608313	dist/KNN_APP	267ad56beec0b855
+10	115	1705767819816382293	apps/CMakeFiles/KNN_APP.dir/knn.c.o	94afda34dacca0eb
+115	338	1705767820036382213	dist/KNN_APP	267ad56beec0b855

@@ -1,4 +1,6 @@
 
+#ifndef KNN_LIB_H
+#define KNN_LIB_H
 #include "models.h"
 
 size_t kp_predict(klass_predictor *kp, Point *text, size_t k);
@@ -11,3 +13,4 @@ int kolmogorov_distance(char *text);
 int compare(const void *a, const void *b);
 int max(int a, int b);
 int min(int a, int b);
+#endif

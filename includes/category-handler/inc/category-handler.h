@@ -1,5 +1,5 @@
-#ifndef _DICT_H_
-#define _DICT_H_
+#ifndef _CATEGORY_HANDLER_H_
+#define _CATEGORY_HANDLER_H_
 
 #define HASHSIZE 101
 
