@@ -8,9 +8,7 @@
 #include <sys/sysinfo.h>
 #include <zlib.h>
 int min(int a, int b) { return a < b ? a : b; }
-
 int max(int a, int b) { return a > b ? a : b; }
-
 int compare(const void *a, const void *b) {
   DistancePoint *da = (DistancePoint *)a;
   DistancePoint *db = (DistancePoint *)b;
