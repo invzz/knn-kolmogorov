@@ -1,45 +1,34 @@
 #ifndef _MODELS_H
 #define _MODELS_H
+#include <pthread.h>
 #include <stdlib.h>
 
-typedef struct record_s {
-  char *category;
-  char *headline;
-  char *short_description;
-  char *authors;
-  char *link;
-  char *pubDate;
-
-} t_sample;
-
 typedef struct point_s {
-  t_sample *data;
+  char *text;
+  char *label;
   int klass;
-
 } Point;
-
 typedef struct data_array_s {
   size_t size;
   size_t capacity;
   size_t index;
-  Point **points;
+  Point **samples;
 } dataset;
-typedef struct knn {
+typedef struct knn_s {
   int k;
   dataset *training;
   int training_count;
   dataset *testing;
   int testing_size;
-
 } t_knn;
-typedef struct {
+typedef struct distance_s {
   Point *point;
   double distance;
 } DistancePoint;
-typedef struct {
+typedef struct kp_state_s {
+  int train_count;
   Point **train;
   Point *testing;
-  int train_count;
   DistancePoint *neighbours;
 } kp_state;
 typedef struct klass_predictor_s {

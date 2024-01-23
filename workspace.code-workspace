@@ -39,9 +39,9 @@
             "editor.formatOnSave": true,
             "editor.fontSize": 10,
         },
-        "cmake.configureSettings": {
-            "CMAKE_TOOLCHAIN_FILE": "/home/invzz/vcpkg/scripts/buildsystems/vcpkg.cmake"
-        },
+        // "cmake.configureSettings": {
+        //     "CMAKE_TOOLCHAIN_FILE": "/home/invzz/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        // },
         "files.exclude": {
             "**/.git": true,
             "**/build": true,
@@ -157,7 +157,13 @@
             "stdlib.h": "c",
             "limits": "c",
             "knn.h": "c",
-            "float.h": "c"
+            "float.h": "c",
+            "array": "c",
+            "string": "c",
+            "string_view": "c",
+            "iterator": "c",
+            "models.h": "c",
+            "agnewsloader.h": "c"
         },
         "cmake.debugConfig": {
             "args": [
