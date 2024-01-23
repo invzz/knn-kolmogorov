@@ -20,7 +20,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/inc
 )
 
-aux_source_directory(${PROJECT_SOURCE_DIR} SRC)
+aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC)
 
 add_executable(${PROJECT_NAME} ${SRC})
 

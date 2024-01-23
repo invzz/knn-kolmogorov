@@ -163,7 +163,8 @@
             "string_view": "c",
             "iterator": "c",
             "models.h": "c",
-            "agnewsloader.h": "c"
+            "agnewsloader.h": "c",
+            "sysinfo.h": "c"
         },
         "cmake.debugConfig": {
             "args": [

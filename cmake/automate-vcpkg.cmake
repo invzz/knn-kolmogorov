@@ -55,7 +55,6 @@
 # specifying their locations.
 #------------------------------------------------------------------------------------------------------------
 
-include(init.cmake)
 cmake_minimum_required (VERSION 3.12)
 
 if(WIN32)
@@ -98,7 +97,6 @@ macro(vcpkg_bootstrap)
     if(NOT DEFINED ${CMAKE_TOOLCHAIN_FILE})
         # We know this wasn't set before so we need point the toolchain file to the newly found VCPKG_ROOT
         set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake CACHE STRING "")
-        message(STATUS "Setting CMAKE_TOOLCHAIN_FILE to ${CMAKE_TOOLCHAIN_FILE}")
     
         # Just setting vcpkg.cmake as toolchain file does not seem to actually pull in the code
         include(${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
@@ -164,12 +162,9 @@ macro(vcpkg_install_packages)
         set(ENV{VCPKG_DEFAULT_TRIPLET} "${VCPKG_TRIPLET}")
     endif()
 
-    message(STATUS "PROJECT DIR: ${ROOT_DIR}")
-
     execute_process(
-        COMMAND ./${VCPKG_ROOT}/${VCPKG_EXEC} install 
-        WORKING_DIRECTORY ${ROOT_DIR}
-    
+        COMMAND ${VCPKG_EXEC} install ${ARGN}
+        WORKING_DIRECTORY ${VCPKG_ROOT}
         )
 endmacro()
     

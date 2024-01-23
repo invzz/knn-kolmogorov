@@ -3,11 +3,11 @@ project(KNN
         VERSION  0.1
         LANGUAGES C
         )   
-include(init.cmake)
-include(folders.cmake)
-include(targets.cmake)
-include(vcpkg.cmake)
+include(cmake/init.cmake)
+include(cmake/folders.cmake)
+include(cmake/targets.cmake)
+include(cmake/automate-vcpkg.cmake)
+
 vcpkg_bootstrap()
-vcpkg_install_packages()
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/dist)
 
