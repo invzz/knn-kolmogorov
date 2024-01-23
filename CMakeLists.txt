@@ -5,6 +5,9 @@ project(KNN
         )   
 include(cmake/init.cmake)
 include(cmake/folders.cmake)
+add_definitions( -DTRAIN_PATH="${PROJECT_SOURCE_DIR}/resources/train.csv" )
+add_definitions( -DTEST_PATH="${PROJECT_SOURCE_DIR}/resources/test.csv" )
+message(STATUS "RES_DIR: " ${PROJECT_SOURCE_DIR}/resources/)
 include(cmake/targets.cmake)
 include(cmake/automate-vcpkg.cmake)
 

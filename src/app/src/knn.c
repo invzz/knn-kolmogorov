@@ -1,8 +1,4 @@
 
-
-#define TRAIN_PATH "/home/invzz/git/KNN/resources/train.csv"
-#define TEST_PATH "/home/invzz/git/KNN/resources/test.csv"
-
 #include "knn.h"
 #include "agnewsloader.h"
 #include "models.h"

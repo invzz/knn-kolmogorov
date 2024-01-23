@@ -47,11 +47,11 @@ void from_file_stram(FILE *stream, dataset *data)
 
 int read_agn(char *trainpath, char *testpath, dataset *train, dataset *test)
 {
-  FILE *stream = fopen("/home/invzz/git/KNN/resources/test.csv", "r");
+  FILE *stream = fopen(testpath, "r");
   from_file_stram(stream, test);
   fclose(stream);
   printf("Test loaded on memory! [ %d records ]\n", (int)test->size);
-  stream = fopen("/home/invzz/git/KNN/resources/train.csv", "r");
+  stream = fopen(trainpath, "r");
   from_file_stram(stream, train);
 
   fclose(stream);
