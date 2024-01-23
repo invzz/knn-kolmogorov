@@ -3,8 +3,6 @@
 
 ## intro:
 
-
-
 - It uses lenght of GZIP of the text to compute distance measure.
 - Distance function is multithreaded. 
 
