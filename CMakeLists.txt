@@ -8,6 +8,10 @@ include(cmake/folders.cmake)
 include(cmake/targets.cmake)
 include(cmake/automate-vcpkg.cmake)
 
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PRJ_ROOT})
+
+
+
 vcpkg_bootstrap()
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/dist)
 
