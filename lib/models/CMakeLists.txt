@@ -8,7 +8,10 @@ find_package(json-c CONFIG REQUIRED)
 include_directories(
     BEFORE
     ${PROJECT_SOURCE_DIR}/inc
+    ${PROJECT_SOURCE_DIR}/src
 )
-set (SRC ${PROJECT_SOURCE_DIR}/inc/models.h )
+aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC)
+aux_source_directory(${PROJECT_SOURCE_DIR}/inc INC)
 
-add_library(${PROJECT_NAME} INTERFACE)
+add_library(${PROJECT_NAME} ${SRC} ${INC})
+

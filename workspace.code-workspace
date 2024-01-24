@@ -164,7 +164,12 @@
             "iterator": "c",
             "models.h": "c",
             "agnewsloader.h": "c",
-            "sysinfo.h": "c"
+            "sysinfo.h": "c",
+            "initializer_list": "c",
+            "assert.h": "c",
+            "queue.h": "c",
+            "model.distancepoint.h": "c",
+            "model.kp_state.h": "c"
         },
         "cmake.debugConfig": {
             "args": [

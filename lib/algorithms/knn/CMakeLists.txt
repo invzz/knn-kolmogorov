@@ -11,9 +11,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/inc
     ${LIB_DIR}/models/inc
 )
-set (SRC ${PROJECT_SOURCE_DIR}/src/${APP_NAME}.c 
-         ${PROJECT_SOURCE_DIR}/inc/${APP_NAME}.h
-)
+set ( SRC ${PROJECT_SOURCE_DIR}/src/${APP_NAME}.c )
 
 add_library(${PROJECT_NAME} ${SRC})
-target_link_libraries(${PROJECT_NAME} )
+target_link_libraries(${PROJECT_NAME} models)
