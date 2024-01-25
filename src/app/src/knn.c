@@ -52,23 +52,11 @@ void print_table_footer()
   // printf("\33[2K\r");
 }
 
-void print_table_header()
-{
-  print_table_footer();
-  printf("\n");
-  printf("| %-*s ", 10, "Predicted ");
-  printf("| %-*s ", 10, "Actual ");
-  printf("| %-*s |\n", 70, "text ");
-  print_table_footer();
-  printf("\n");
-}
-
 void print_table_record(int predicted, int actual, char *text)
 {
-  printf("| %-*s ", 10, klasses[predicted]);
-  printf("| %-*s ", 10, klasses[actual]);
-  printf("| %-70.70s |\n", text);
-  print_table_footer();
+  printf(WHT "[" YEL "Predicted:" CYN " %-*s " WHT "] ", 8, klasses[predicted]);
+  printf(WHT "[" YEL "Actual:" CYN " %-*s " WHT "] ", 8, klasses[actual]);
+  printf(WHT "[" YEL "Text:" CYN " %-20.20s " WHT "]", text);
 }
 
 void save_csv(FILE *fd, int predicted, char *text) {}
@@ -79,7 +67,8 @@ int main(int argc, char **argv)
   int   number_of_tests  = 0;
   int   best_k           = 0;
   float best_accuracy    = 0.0;
-
+  printf("\033[2J\033[1;1H");
+  fflush(stdout);
   klass_predictor *kp    = allocateKlassPredictor();
   dataset         *test  = get_dataset(TEST_PATH);
   dataset         *train = get_dataset(TRAIN_PATH);
@@ -106,23 +95,20 @@ int main(int argc, char **argv)
 
   FILE *fp = fopen("output.csv", "w");
   fprintf(fp, "predicted,actual,text\n");
-  print_table_header();
+  printf("\n***\n\n");
   int g = 0; // good predictions
   for(int i = 0; i < number_of_tests; i++)
     {
       Point p = (test->samples)[i];
+      printf("\33[2K\r" CYNB "[ %d/%d ( %-2.2f%% ) ]" CRESET "::" YEL " Accuracy : " WHT "[" CYN " %-2.2f%%" WHT
+             " ] >> " CRESET,
+             i, number_of_tests, (float)i / number_of_tests * 100, (float)g / (i + 1) * 100);
       print_table_record(predicted, p.klass, p.text);
-      printf("\33[2K\r" REDB "[ %*d / %*d ]" CRESET "::" YEL " Accuracy : " RED "[ %-2.2f%% ] " CRESET "::" YEL
-             " Progress : " RED "[ %-2.2f%% ]" CRESET,
-             5, i, 5, number_of_tests, (float)g / (i + 1) * 100, (float)i / number_of_tests * 100);
       fflush(stdout);
       predicted = kp_predict(kp, &p, best_k);
       if(predicted == p.klass) ++g;
       fprintf(fp, "%d,%s\n", predicted, p.text);
       save_csv(fp, predicted, p.text);
-      printf("\33[2K\r");
-      print_table_footer();
-      printf("\n");
     }
   fclose(fp);
 
