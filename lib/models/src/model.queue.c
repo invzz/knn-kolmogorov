@@ -1,4 +1,5 @@
 #include "model.queue.h"
+#include "model.logging.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -40,11 +41,10 @@ void enqueue(Queue *queue, thread_message *data)
 {
   if(data == NULL) return;
   if(isFull(queue)) return;
-
-  queue->rear                    = (queue->rear + 1) % queue->capacity;
-  queue->array[queue->rear].data = data;
-  queue->size                    = queue->size + 1;
-  //   printf("[%d] enqueued to queue : [%20.20s]\n", queue->size + 1, data->text);
+  queue->rear                                = (queue->rear + 1) % queue->capacity;
+  queue->array[queue->rear].data             = data;
+  queue->size                                = queue->size + 1;
+  queue->array[queue->rear].hasBeenProcessed = 0;
 }
 
 thread_message *dequeue(Queue *queue)
@@ -58,5 +58,9 @@ thread_message *dequeue(Queue *queue)
       queue->front = (queue->front + 1) % queue->capacity;
       queue->size  = queue->size - 1;
     }
-  return data;
+  if(data != NULL && queue->array[queue->front].hasBeenProcessed == 0)
+    {
+      return data;
+    }
+  return NULL;
 }

@@ -1,5 +1,6 @@
 #ifndef _MODEL_COLORS_H_
 #define _MODEL_COLORS_H_
+
 // Regular text
 #define BLK "\e[0;30m"
 #define RED "\e[0;31m"

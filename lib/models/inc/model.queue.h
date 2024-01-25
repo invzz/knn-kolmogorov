@@ -11,6 +11,7 @@ struct thread_message_s;
 typedef struct queue_node_s
 {
   struct thread_message_s *data;
+  int                      hasBeenProcessed;
 } QueueNode;
 
 typedef struct queue_s

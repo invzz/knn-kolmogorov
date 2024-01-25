@@ -10,6 +10,7 @@ typedef struct distance_s
   double distance;
 } DistancePoint;
 
+DistancePoint *allocateDistancePoints(int count);
 DistancePoint *allocateDistancePoint();
 void           deallocateDistancePoints(DistancePoint *distancePoint, int count);
 

@@ -169,7 +169,8 @@
             "assert.h": "c",
             "queue.h": "c",
             "model.distancepoint.h": "c",
-            "model.kp_state.h": "c"
+            "model.kp_state.h": "c",
+            "model.point.h": "c"
         },
         "cmake.debugConfig": {
             "args": [

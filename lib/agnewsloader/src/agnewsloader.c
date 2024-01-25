@@ -1,5 +1,5 @@
+#define _GNU_SOURCE
 #include "agnewsloader.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,7 +21,7 @@ void from_file_stram(FILE *stream, dataset *data)
       current                      = data->size - 1;
       token                        = strtok_r(line, SEPARATOR, &saveptr1);
       data->samples[current].klass = atoi(token) - 1;
-      token                        = strtok_r(NULL, SEPARATOR, &saveptr1);
+      token                        = strtok_r(NULL, NEWLINE, &saveptr1);
       data->samples[current].text  = strdup(token);
     }
   return;
@@ -38,15 +38,11 @@ int count_lines(FILE *stream)
 
 dataset *get_dataset(char *filepath)
 {
-  FILE    *stream     = fopen(filepath, "r");
-  int      test_count = count_lines(stream);
-  dataset *data       = allocateDataset(test_count - 1);
+  FILE    *stream = fopen(filepath, "r");
+  dataset *data   = allocateDataset(count_lines(stream) - 1);
   from_file_stram(stream, data);
   fclose(stream);
-  printf("test"
-         " loaded on memory into"
-         "test"
-         "  [ %-10.10d records ]\n",
+  printf(CRESET "Found " RED "[ %-15.15s ]" CRESET " :: " CYN "[ %-10.10d records ]\n" CRESET, basename(filepath),
          (int)data->size);
   return data;
 }

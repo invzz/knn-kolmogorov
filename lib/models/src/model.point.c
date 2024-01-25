@@ -1,10 +1,12 @@
 // point.c
 #include "model.point.h"
+#include "model.logging.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 Point *allocatePoint()
 {
+  DEBUG_PRINT("\r[ Allocated ]   ::  Point\n");
   Point *newPoint = (Point *)malloc(sizeof(Point));
   if(newPoint == NULL)
     {
@@ -18,6 +20,7 @@ Point *allocatePoint()
 
 void deallocatePoints(Point *point, int count)
 {
+  DEBUG_PRINT("Deallocating Points\n");
   for(int i = 0; i < count; i++) free(point[i].text);
   free(point);
 }

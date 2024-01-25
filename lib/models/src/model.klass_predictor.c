@@ -1,9 +1,11 @@
 #include "model.klass_predictor.h"
+#include "model.logging.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 klass_predictor *allocateKlassPredictor()
 {
+  DEBUG_PRINT("\r[ Allocated ]   ::  klass_predictor\n");
   klass_predictor *newPredictor = (klass_predictor *)malloc(sizeof(klass_predictor));
   if(newPredictor == NULL)
     {
@@ -24,7 +26,8 @@ klass_predictor *allocateKlassPredictor()
 }
 void deallocateKlassPredictor(klass_predictor *predictor)
 {
-  //deallocateDistancePoint(predictor->neighbours);
+  DEBUG_PRINT("Deallocating klass_predictor\n");
+  // deallocateDistancePoint(predictor->neighbours);
   free(predictor->threads);
   deallocateKPState(predictor->states);
   free(predictor);

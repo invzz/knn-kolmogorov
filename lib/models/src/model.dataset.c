@@ -1,10 +1,12 @@
 #include "model.dataset.h"
+#include "model.logging.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include "model.logging.h"
 dataset *allocateDataset(int capacity)
 {
+  DEBUG_PRINT("\r[ Allocated ]   ::  Dataset\n");
   dataset *newDataset = (dataset *)malloc(sizeof(dataset));
   if(newDataset == NULL)
     {
@@ -25,6 +27,7 @@ dataset *allocateDataset(int capacity)
 
 void deallocateDataset(dataset *data)
 {
+  DEBUG_PRINT("Deallocating Dataset\n");
   deallocatePoints(data->samples, data->size);
   free(data);
 }
