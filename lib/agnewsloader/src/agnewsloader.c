@@ -4,42 +4,49 @@
 #include <stdlib.h>
 #include <string.h>
 #define SEPARATOR ","
-
-Point *get_point(char *line)
-{
-  Point      *point = allocatePoint();
-  const char *tok   = strtok(line, SEPARATOR);
-  point->klass      = atoi(tok) - 1;
-  int i             = 0;
-  point->text       = strdup(&line[strlen(tok) + 1]);
-  return point;
-}
+#define NEWLINE   "\n"
 
 void from_file_stram(FILE *stream, dataset *data)
 {
-  data->size      = 0;
-  data->capacity  = 0;
-  int  line_count = 0;
-  char line[BUFSIZ];
+  data->size         = 0;
+  int   line_count   = 0;
+  int   current      = 0;
+  char  line[BUFSIZ] = {0};
+  char *token;
+  char *saveptr1;
   while(fgets(line, BUFSIZ, stream))
     {
       if(line_count++ == 0) continue;
-      char  *tmp = strdup(line);
-      Point *p   = get_point(tmp);
-      dataset_add_point(data, p);
-      free(tmp);
+      data->size++;
+      current                      = data->size - 1;
+      token                        = strtok_r(line, SEPARATOR, &saveptr1);
+      data->samples[current].klass = atoi(token) - 1;
+      token                        = strtok_r(NULL, SEPARATOR, &saveptr1);
+      data->samples[current].text  = strdup(token);
     }
+  return;
 }
 
-int read_agn(char *trainpath, char *testpath, dataset *train, dataset *test)
+int count_lines(FILE *stream)
 {
-  FILE *stream = fopen(testpath, "r");
-  from_file_stram(stream, test);
+  int  line_count   = 0;
+  char line[BUFSIZ] = {0};
+  while(fgets(line, BUFSIZ, stream)) ++line_count;
+  rewind(stream);
+  return line_count;
+}
+
+dataset *get_dataset(char *filepath)
+{
+  FILE    *stream     = fopen(filepath, "r");
+  int      test_count = count_lines(stream);
+  dataset *data       = allocateDataset(test_count - 1);
+  from_file_stram(stream, data);
   fclose(stream);
-  printf("Test loaded on memory!  [ %-10.10d records ]\n", (int)test->size);
-  stream = fopen(trainpath, "r");
-  from_file_stram(stream, train);
-  fclose(stream);
-  printf("Train loaded on memory! [ %-10.10d records ]\n", (int)train->size);
-  return 0;
+  printf("test"
+         " loaded on memory into"
+         "test"
+         "  [ %-10.10d records ]\n",
+         (int)data->size);
+  return data;
 }

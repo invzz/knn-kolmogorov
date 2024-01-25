@@ -23,9 +23,9 @@ typedef struct queue_s
   int        end;
 } Queue;
 Queue                   *createQueue(int capacity);
+void                     deallocateQueue(Queue *queue);
 bool                     isFull(Queue *queue);
 bool                     isEmpty(Queue *queue);
 void                     enqueue(Queue *queue, struct thread_message_s *data);
 struct thread_message_s *dequeue(Queue *queue);
-
 #endif // QUEUE_H

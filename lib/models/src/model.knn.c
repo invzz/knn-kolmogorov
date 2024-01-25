@@ -21,10 +21,5 @@ t_knn *allocateKNN()
 
 void deallocateKNN(t_knn *knn)
 {
-  if(knn != NULL)
-    {
-      deallocateDataset(knn->training);
-      deallocateDataset(knn->testing);
-      free(knn);
-    }
+  if(knn != NULL) { free(knn); }
 }

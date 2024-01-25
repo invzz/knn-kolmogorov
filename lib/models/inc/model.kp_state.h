@@ -10,7 +10,7 @@ struct queue_s;
 typedef struct kp_state_s
 {
   int             train_count;
-  Point         **train;
+  Point          *train;
   Point          *testing;
   DistancePoint  *neighbours;
   struct queue_s *taskQueue;

@@ -6,9 +6,12 @@
 #include <stdlib.h>
 #include <time.h>
 extern char *klasses[];
+
+#define malloc my_alloc
 // take a random sample from the test set
 
-void cross_validation(int *good_predictions, int number_of_tests, int k, t_knn *knn, klass_predictor *kp, float *best_accuracy, int *best_k)
+void cross_validation(int *good_predictions, int number_of_tests, int k, t_knn *knn, klass_predictor *kp,
+                      float *best_accuracy, int *best_k)
 {
   *good_predictions = 0;
   int predicted     = 0;
@@ -18,13 +21,14 @@ void cross_validation(int *good_predictions, int number_of_tests, int k, t_knn *
   // for each sample in the test set
   for(int i = 0; i < number_of_tests; i++)
     {
-      Point *random_sample = knn->testing->samples[i + 100];
+      Point *random_sample = knn->testing->samples + i + 100;
       actual               = random_sample->klass;
       predicted            = kp_predict(kp, random_sample, k);
       if(predicted == random_sample->klass) ++g;
       printf("\r" RED "[ %2.2f%% ] " CYN "[ %2.2d ]-[ %-15s ] :: "
              "[ %2.2d ]-[ %-15s ] ::  " BRED "[%2.2f%%]" CRESET,
-             (float)i / number_of_tests * 100, predicted, klasses[predicted], actual, klasses[actual], (float)g / (i + 1) * 100);
+             (float)i / number_of_tests * 100, predicted, klasses[predicted], actual, klasses[actual],
+             (float)g / (i + 1) * 100);
       fflush(stdout);
     }
 
@@ -41,34 +45,39 @@ void cross_validation(int *good_predictions, int number_of_tests, int k, t_knn *
 
 int main(int argc, char **argv)
 {
-  dataset         *test  = allocateDataset();
-  dataset         *train = allocateDataset();
-  klass_predictor *kp    = allocateKlassPredictor();
+  klass_predictor *kp = allocateKlassPredictor();
 
-  t_knn *knn = allocateKNN();
+  // t_knn *knn = allocateKNN();
 
-  read_agn(TRAIN_PATH, TEST_PATH, train, test);
-  knn->training = train;
-  knn->testing  = test;
-  knn->k        = 2;
+  dataset *test  = get_dataset(TEST_PATH);
+  dataset *train = get_dataset(TRAIN_PATH);
 
-  kp_init(kp, knn, klasses, 4, 0);
+  // knn->training = train;
+  // knn->testing  = test;
+  // knn->k        = 2;
 
-  int   good_predictions = 0;
-  int   number_of_tests  = 100;
-  int   best_k           = 0;
-  float best_accuracy    = 0.0;
+  kp                = kp_init(train, test, 2);
+  kp->klasses       = klasses;
+  kp->klasses_count = 4;
 
-  for(int k = 1; k < 100; k++) { cross_validation(&good_predictions, number_of_tests, k, knn, kp, &best_accuracy, &best_k); }
+  // int   good_predictions = 0;
+  // int   number_of_tests  = 100;
+  // int   best_k           = 0;
+  // float best_accuracy    = 0.0;
 
-  // good old cross validation to find best k (multithreaded version!)
-  printf("\33[2K\r");
-  fflush(stdout);
-  printf("\rBest: [%2d], Best Accuracy: %.2f", best_k, best_accuracy);
+  // for(int k = 1; k < 100; k++) { cross_validation(&good_predictions, number_of_tests, k, knn, kp, &best_accuracy,
+  // &best_k); }
 
-  // deallocateDataset(test);
+  // // good old cross validation to find best k (multithreaded version!)
+  // printf("\33[2K\r");
+  // fflush(stdout);
+  // printf("\rBest: [%2d], Best Accuracy: %.2f", best_k, best_accuracy);
+
+  // // deallocateDataset(test);
+  // // deallocateDataset(train);
+  deallocateDataset(test);
+  deallocateDataset(train);
   deallocateKlassPredictor(kp);
-  // deallocateDataset(train);
-  deallocateKNN(knn);
+  // deallocateKNN(knn);
   return 0;
 }

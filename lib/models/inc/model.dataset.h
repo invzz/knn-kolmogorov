@@ -6,14 +6,14 @@
 
 typedef struct data_array_s
 {
-  int     size;
-  int     capacity;
-  int     index;
-  Point **samples;
+  int    size;
+  int    capacity;
+  int    index;
+  Point *samples;
 } dataset;
 
 void     deallocateDataset(dataset *data);
-dataset *allocateDataset();
+dataset *allocateDataset(int capacity);
 void     dataset_add_point(dataset *data, Point *point);
 
 #endif

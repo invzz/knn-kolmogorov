@@ -1,5 +1,6 @@
 // kp_state.c
 #include "model.kp_state.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -22,7 +23,8 @@ kp_state *allocateKPState()
 
 void deallocateKPState(kp_state *state)
 {
-  free(state->train);
-  free(state->neighbours);
+  // free(state->neighbours);
+  //  TODO: free queues
+
   free(state);
 }

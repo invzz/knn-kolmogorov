@@ -12,17 +12,12 @@ Point *allocatePoint()
       exit(EXIT_FAILURE);
     }
   newPoint->text  = NULL;
-  newPoint->label = NULL;
   newPoint->klass = 0;
   return newPoint;
 }
 
-void deallocatePoint(Point *point)
+void deallocatePoints(Point *point, int count)
 {
-  if(point != NULL)
-    {
-      free(point->text);
-      free(point->label);
-      free(point);
-    }
+  for(int i = 0; i < count; i++) free(point[i].text);
+  free(point);
 }

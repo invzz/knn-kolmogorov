@@ -1,7 +1,7 @@
 SortIncludes: Never
 BasedOnStyle: LLVM
 AccessModifierOffset: 0
-ColumnLimit: 500
+ColumnLimit: 120
 AlignAfterOpenBracket: Align
 AlignArrayOfStructures: Left
 AlignConsecutiveMacros: true

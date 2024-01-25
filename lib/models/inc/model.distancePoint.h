@@ -3,7 +3,7 @@
 #define _DISTANCE_POINT_H
 
 #include "model.point.h"
-
+#define deallocateDistancePoint(distancePoint) deallocateDistancePoints(distancePoint, 1)
 typedef struct distance_s
 {
   Point *point;
@@ -11,6 +11,6 @@ typedef struct distance_s
 } DistancePoint;
 
 DistancePoint *allocateDistancePoint();
-void           deallocateDistancePoint(DistancePoint *distancePoint);
+void           deallocateDistancePoints(DistancePoint *distancePoint, int count);
 
 #endif

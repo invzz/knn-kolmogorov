@@ -16,4 +16,8 @@ DistancePoint *allocateDistancePoint()
   return newDistancePoint;
 }
 
-void deallocateDistancePoint(DistancePoint *distancePoint) { free(distancePoint); }
+void deallocateDistancePoints(DistancePoint *distancePoint, int count)
+{
+  deallocatePoint(distancePoint->point);
+  free(distancePoint);
+}

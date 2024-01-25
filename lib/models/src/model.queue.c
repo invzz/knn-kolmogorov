@@ -5,12 +5,31 @@
 Queue *createQueue(int capacity)
 {
   Queue *queue    = (Queue *)malloc(sizeof(Queue));
-  queue->array    = (QueueNode *)malloc(capacity * sizeof(QueueNode));
+  queue->array    = (QueueNode *)calloc(capacity, sizeof(QueueNode));
   queue->capacity = capacity;
   queue->front    = 0;
   queue->size     = 0;
   queue->rear     = capacity - 1;
   return queue;
+}
+
+// Deallocator function to free the memory allocated for a QueueNode
+void deallocateQueueNodes(QueueNode *node, int count)
+{
+  if(node != NULL)
+    {
+      for(int i = 0; i < count; ++i) { deallocateThreadMessage(node->data); }
+      free(node);
+    }
+}
+
+void deallocateQueue(Queue *queue)
+{
+  if(queue != NULL)
+    {
+      deallocateQueueNodes(queue->array, queue->size);
+      free(queue);
+    }
 }
 
 bool isFull(Queue *queue) { return (queue->size == queue->capacity); }

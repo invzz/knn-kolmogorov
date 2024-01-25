@@ -7,15 +7,15 @@
 #include <pthread.h>
 typedef struct klass_predictor_s
 {
-  int            nprocs;
-  int            chunk_size;
-  int            chunk_rem;
-  Point        **train_samples;
-  int            train_count;
-  pthread_t     *threads;
-  kp_state     **states;
   char         **klasses;
   int            klasses_count;
+  int            nprocs;
+  int            train_count;
+  int            chunk_size;
+  int            chunk_rem;
+  pthread_t     *threads;
+  kp_state      *states;
+  Point         *train_samples;
   DistancePoint *neighbours;
 } klass_predictor;
 

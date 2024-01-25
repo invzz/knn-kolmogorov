@@ -1,0 +1,6 @@
+==817904== Memcheck, a memory error detector
+==817904== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==817904== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==817904== Command: ./dist/KNN_APP
+==817904== Parent PID: 772389
+==817904== 
