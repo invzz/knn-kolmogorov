@@ -14,12 +14,11 @@ Queue *createQueue(int capacity)
 }
 
 // Deallocator function to free the memory allocated for a QueueNode
-void deallocateQueueNodes(QueueNode *node, int count)
+void deallocateNodeData(QueueNode *node, int count)
 {
   if(node != NULL)
     {
       for(int i = 0; i < count; ++i) { deallocateThreadMessage(node->data); }
-      free(node);
     }
 }
 
@@ -27,7 +26,8 @@ void deallocateQueue(Queue *queue)
 {
   if(queue != NULL)
     {
-      deallocateQueueNodes(queue->array, queue->size);
+      deallocateNodeData(queue->array, queue->size);
+      free(queue->array);
       free(queue);
     }
 }

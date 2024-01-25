@@ -129,7 +129,7 @@ klass_predictor *kp_init(dataset *train, dataset *test, int k)
 int *compute_frequencies(klass_predictor *kp, size_t k)
 {
   int  klass_count   = kp->klasses_count;
-  int *neighbourhood = malloc(sizeof(int) * klass_count);
+  int *neighbourhood = calloc(sizeof(int), klass_count);
   assert(neighbourhood != NULL);
   memset(neighbourhood, 0, sizeof(int) * klass_count);
   for(int i = 0; i < k && i < kp->train_count; ++i) { neighbourhood[kp->neighbours[i].point->klass] += 1; }

@@ -10,7 +10,7 @@ extern char *klasses[];
 #define malloc my_alloc
 // take a random sample from the test set
 
-void cross_validation(int *good_predictions, int number_of_tests, int k, t_knn *knn, klass_predictor *kp,
+void cross_validation(int *good_predictions, dataset *test, int number_of_tests, int k, klass_predictor *kp,
                       float *best_accuracy, int *best_k)
 {
   *good_predictions = 0;
@@ -21,10 +21,10 @@ void cross_validation(int *good_predictions, int number_of_tests, int k, t_knn *
   // for each sample in the test set
   for(int i = 0; i < number_of_tests; i++)
     {
-      Point *random_sample = knn->testing->samples + i + 100;
-      actual               = random_sample->klass;
-      predicted            = kp_predict(kp, random_sample, k);
-      if(predicted == random_sample->klass) ++g;
+      Point p   = (test->samples)[i + 100];
+      actual    = p.klass;
+      predicted = kp_predict(kp, &p, k);
+      if(predicted == p.klass) ++g;
       printf("\r" RED "[ %2.2f%% ] " CYN "[ %2.2d ]-[ %-15s ] :: "
              "[ %2.2d ]-[ %-15s ] ::  " BRED "[%2.2f%%]" CRESET,
              (float)i / number_of_tests * 100, predicted, klasses[predicted], actual, klasses[actual],
@@ -60,24 +60,22 @@ int main(int argc, char **argv)
   kp->klasses       = klasses;
   kp->klasses_count = 4;
 
-  // int   good_predictions = 0;
-  // int   number_of_tests  = 100;
-  // int   best_k           = 0;
-  // float best_accuracy    = 0.0;
+  int   good_predictions = 0;
+  int   number_of_tests  = 500;
+  int   best_k           = 0;
+  float best_accuracy    = 0.0;
 
-  // for(int k = 1; k < 100; k++) { cross_validation(&good_predictions, number_of_tests, k, knn, kp, &best_accuracy,
-  // &best_k); }
+  for(int k = 3; k <= 10; k++)
+    {
+      cross_validation(&good_predictions, test, number_of_tests, k, kp, &best_accuracy, &best_k);
+    }
 
-  // // good old cross validation to find best k (multithreaded version!)
-  // printf("\33[2K\r");
-  // fflush(stdout);
-  // printf("\rBest: [%2d], Best Accuracy: %.2f", best_k, best_accuracy);
+  printf("\33[2K\r");
+  fflush(stdout);
+  printf("\rBest: [%2d], Best Accuracy: %.2f", best_k, best_accuracy);
 
-  // // deallocateDataset(test);
-  // // deallocateDataset(train);
   deallocateDataset(test);
   deallocateDataset(train);
   deallocateKlassPredictor(kp);
-  // deallocateKNN(knn);
   return 0;
 }

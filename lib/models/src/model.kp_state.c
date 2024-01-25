@@ -23,8 +23,8 @@ kp_state *allocateKPState()
 
 void deallocateKPState(kp_state *state)
 {
-  // free(state->neighbours);
-  //  TODO: free queues
-
+  if(state->neighbours != NULL) { deallocateDistancePoints(state->neighbours, state->train_count); }
+  if(state->taskQueue != NULL) deallocateQueue(state->taskQueue);
+  if(state->predictQueue != NULL) deallocateQueue(state->predictQueue);
   free(state);
 }
