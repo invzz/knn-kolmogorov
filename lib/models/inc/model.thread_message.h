@@ -5,11 +5,11 @@
 #include "model.point.h"
 #include "model.kp_state.h"
 
-#define THREAD_MESSAGE_COMPUTE_NCDS 0
-#define THREAD_MESSAGE_NCDS_DONE    1
-#define THREAD_MESSAGE_STOP         2
-#define THREAD_MESSAGE_KILL         3
-#define THREAD_MESSAGE_UPDATE       4
+#define THREAD_MESSAGE_COMPUTE_NCDS 100
+#define THREAD_MESSAGE_NCDS_DONE    101
+#define THREAD_MESSAGE_STOP         102
+#define THREAD_MESSAGE_KILL         103
+#define THREAD_MESSAGE_UPDATE       104
 
 struct kp_state_s;
 

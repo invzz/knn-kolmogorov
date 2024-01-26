@@ -106,7 +106,11 @@ int main(int argc, char **argv)
   number_of_tests = test->size;
 
   FILE *fp;
+#ifdef _WIN32
   fopen_s(&fp, "output.csv", "w");
+#else
+  fp = fopen("output.csv", "w");
+#endif
   fprintf(fp, "predicted,actual,text\n");
   printf("\n***\n\n");
   int g = 0; // good predictions

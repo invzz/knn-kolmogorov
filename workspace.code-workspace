@@ -42,7 +42,7 @@
         // "cmake.configureSettings": {
         //     "CMAKE_TOOLCHAIN_FILE": "/home/invzz/vcpkg/scripts/buildsystems/vcpkg.cmake"
         // },
-   "files.encoding": "utf8",
+        //    "files.encoding": "utf8",
         "files.exclude": {
             "**/.git": true,
             "**/build": true,

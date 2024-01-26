@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#define DEBUG 
 DistancePoint *allocateDistancePoints(int count)
 {
   DistancePoint *newDistancePoint = (DistancePoint *)calloc(count, sizeof(DistancePoint));

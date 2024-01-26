@@ -3,10 +3,17 @@ set(APP_NAME KNN_APP)
 project(${APP_NAME})
 
 set(ZLIB_USE_STATIC_LIBS ON)
+IF (WIN32)
+  # set stuff for windows
+  find_package(pthread REQUIRED)
+  set(DEPENDSON PThreads4W::PThreads4W agnewsloader ZLIB::ZLIB models knn)
+ELSE()
+  set(DEPENDSON agnewsloader ZLIB::ZLIB models knn)
+ENDIF()
+
 find_package(ZLIB REQUIRED)
-find_package(pthreads REQUIRED)
-set(STATIC_LINK PThreads4W::PThreads4W agnewsloader ZLIB::ZLIB models knn)
-set(DEPENDS_ON ${STATIC_LINK})
+
+
 # includes search paths
 include_directories(
     BEFORE
@@ -23,4 +30,4 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC)
 
 add_executable(${APP_NAME} ${SRC})
 
-target_link_libraries(${APP_NAME} ${DEPENDS_ON} )
+target_link_libraries(${APP_NAME} ${DEPENDSON} )

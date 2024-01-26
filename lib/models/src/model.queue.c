@@ -45,7 +45,7 @@ void enqueue(Queue *queue, thread_message *data)
   queue->array[queue->rear].data             = data;
   queue->size                                = queue->size + 1;
   queue->array[queue->rear].hasBeenProcessed = 0;
-  DEBUG_PRINT("\rEn-queueing [ %*d ]\n",5, data->message);
+  DEBUG_PRINT("\rEn-queueing [ %*d ]\n", 5, data->message);
 }
 
 thread_message *dequeue(Queue *queue)
@@ -56,7 +56,7 @@ thread_message *dequeue(Queue *queue)
   if(!isEmpty(queue))
     {
       data = queue->array[queue->front].data;
-      DEBUG_PRINT("\rDe-queueing [ %*d ]\n",5, data->message);
+      DEBUG_PRINT("\rDe-queueing [ %*d ]\n", 5, data->message);
       queue->front = (queue->front + 1) % queue->capacity;
       queue->size  = queue->size - 1;
     }

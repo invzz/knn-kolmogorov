@@ -1,9 +1,8 @@
 
+#ifdef _WIN32
 #include <windows.h>
-#include "knn.h"
-#ifndef _WIN32
-#include <sys/sysinfo.h> // get_nprocs()
 #endif
+#include "knn.h"
 #include <signal.h>
 #include <assert.h>
 #include <float.h>
@@ -12,6 +11,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
+#ifndef _WIN32
+#include <sys/sysinfo.h> // get_nprocs()
+#endif
+typedef struct s_stateMessage
+{
+  kp_state *state;
+  Point    *point;
+} msg_distance;
+
+typedef struct s_resultMessage
+{
+  DistancePoint *neighbours;
+} msg_result;
+
 int compare(const void *a, const void *b)
 {
   DistancePoint *da = (DistancePoint *)a;
@@ -23,13 +36,8 @@ int compare(const void *a, const void *b)
 
 int kolmogorov_distance(char *text)
 {
-#ifdef _WIN32
   uLong  size        = strlen(text);
   uLongf output_size = 2 * size;
-#else
-  int size        = strlen(text);
-  int output_size = 2 * size;
-#endif
 
   char *output = malloc(output_size);
   assert(output != NULL);
@@ -55,8 +63,8 @@ float ncd(Point *a, Point *b)
   strcat((char *)buffer, b->text);
 #endif
   int   cX1X2        = kolmogorov_distance((char *)buffer);
-  float mini         = min(cX1, cX2);
-  float maxi         = max(cX1, cX2);
+  float mini         = (cX1 < cX2 ? cX1 : cX2);
+  float maxi         = (cX1 > cX2 ? cX1 : cX2);
   float return_value = (cX1X2 - mini) / maxi;
 
   return return_value;
@@ -65,26 +73,19 @@ float ncd(Point *a, Point *b)
 void *klassify_thread(void *args)
 {
   Queue          *dataQueue = (Queue *)args;
-  resultMessage  *rm        = malloc(sizeof(resultMessage));
+  msg_result     *rm        = malloc(sizeof(msg_result));
   thread_message *tm2       = malloc(sizeof(thread_message));
   int             count;
-
-  // init
-  memset(rm, 0, sizeof(resultMessage));
+  memset(rm, 0, sizeof(msg_result));
   memset(tm2, 0, sizeof(thread_message));
 
-  // listen loop
   while(1)
     {
       thread_message *tm = dequeue(dataQueue);
-
       if(tm == NULL) { continue; }
-
-      switch(tm->message)
+      if(tm->message == THREAD_MESSAGE_COMPUTE_NCDS)
         {
-        case THREAD_MESSAGE_COMPUTE_NCDS:
-
-          stateMessage *sm    = (stateMessage *)tm->data;
+          msg_distance *sm    = (msg_distance *)(tm->data);
           kp_state     *state = sm->state;
           Point        *point = sm->point;
           if(rm->neighbours == NULL) { rm->neighbours = allocateDistancePoints(state->train_count); }
@@ -97,14 +98,12 @@ void *klassify_thread(void *args)
           tm2->data    = rm;
           enqueue(state->predictQueue, tm2);
           // deallocateThreadMessage(tm);
-          break;
+        }
 
-        case THREAD_MESSAGE_KILL:
+      if(tm->message == THREAD_MESSAGE_KILL)
+        {
           free(tm);
           pthread_exit(NULL);
-          break;
-
-        default: break;
         }
     }
 }
@@ -176,7 +175,7 @@ int mode(int *neighbourhood, klass_predictor *kp)
 
 size_t kp_predict(klass_predictor *kp, Point *text, size_t k)
 {
-  stateMessage *sm;
+  msg_distance *sm;
 
   for(size_t i = 0; i < kp->number_of_cores; ++i)
     {
@@ -185,7 +184,7 @@ size_t kp_predict(klass_predictor *kp, Point *text, size_t k)
       kp->states[i].train       = &kp->train_samples[i * kp->chunk_size];
       kp->states[i].train_count = kp->chunk_size;
       if(i == kp->number_of_cores - 1) { kp->states[i].train_count += kp->chunk_rem; }
-      sm                    = malloc(sizeof(stateMessage));
+      sm                    = malloc(sizeof(msg_distance));
       kp->states[i].testing = text;
 
       sm->state = &kp->states[i];
@@ -197,7 +196,7 @@ size_t kp_predict(klass_predictor *kp, Point *text, size_t k)
     }
   int count = 0;
 
-  resultMessage *rm;
+  msg_result *rm;
   while(1)
     {
       if(count == kp->number_of_cores) { break; }
@@ -216,14 +215,14 @@ size_t kp_predict(klass_predictor *kp, Point *text, size_t k)
           switch(msg->message)
             {
             case THREAD_MESSAGE_NCDS_DONE:
-              rm = (resultMessage *)msg->data;
+              rm = (msg_result *)msg->data;
               for(int j = 0; j < kp->states[i].train_count; ++j)
                 {
                   kp->neighbours[i * kp->chunk_size + j] = rm->neighbours[j];
                 }
 
               count++;
-              //deallocateThreadMessage(msg);
+              // deallocateThreadMessage(msg);
               break;
 
             case THREAD_MESSAGE_KILL: printf("Killing thread %zu\n", i); break;

@@ -9,8 +9,13 @@ add_definitions(-DKNN_BUFFER_SIZE=8096)
 include(cmake/automate-vcpkg.cmake)
 vcpkg_bootstrap()
 vcpkg_integrate_install()
-find_package(pthreads REQUIRED)
-
+IF (WIN32)
+  # set stuff for windows
+  find_package(pthread REQUIRED)
+ELSE()
+  # set stuff for other systems
+ENDIF()
+    
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/dist)
 include(cmake/init.cmake)
 include(cmake/folders.cmake)
