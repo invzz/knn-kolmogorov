@@ -27,7 +27,7 @@ void from_file_stram(FILE *stream, dataset *data)
       token                        = strtok(line, SEPARATOR);
       data->samples[current].klass = atoi(token) - 1;
       token                        = strtok(NULL, NEWLINE);
-      data->samples[current].text  = strdup(token);
+      data->samples[current].text  = _strdup(token);
     }
   return;
 }

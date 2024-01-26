@@ -73,6 +73,9 @@ int main(int argc, char **argv)
   int   best_k           = 0;
   float best_accuracy    = 0.0;
   printf("\033[2J\033[1;1H");
+
+  float startTime = (float)clock() / CLOCKS_PER_SEC;
+
   fflush(stdout);
   klass_predictor *kp    = allocateKlassPredictor();
   dataset         *test  = get_dataset(TEST_PATH);
@@ -80,6 +83,10 @@ int main(int argc, char **argv)
   kp                     = kp_init(train, test, 2);
   kp->klasses            = klasses;
   kp->klasses_count      = 4;
+  float endTime          = (float)clock() / CLOCKS_PER_SEC;
+
+  float timeElapsed = endTime - startTime;
+  printf(CYN "\nData loaded" CRESET " :: " YEL "Time elapsed : " WHT "[ %2.2f ]" CRESET "\n", timeElapsed);
 
   // calculate best k
   // for(int k = 2; k <= 2; k++)
@@ -98,27 +105,45 @@ int main(int argc, char **argv)
 
   number_of_tests = test->size;
 
-  FILE *fp = fopen("output.csv", "w");
+  FILE *fp;
+  fopen_s(&fp, "output.csv", "w");
   fprintf(fp, "predicted,actual,text\n");
   printf("\n***\n\n");
   int g = 0; // good predictions
-  for(int i = 0; i < number_of_tests; i++)
+
+  printf("[ Calc  ] : ");
+  int i       = 0;
+  timeElapsed = 0;
+  for(i = 0; i < 5; i++)
     {
-      Point p = (test->samples)[i];
-      printf("\33[2K\r" CYNB "[ %d/%d ( %-2.2f%% ) ]" CRESET "::" YEL " Accuracy : " WHT "[" CYN " %-2.2f%%" WHT
-             " ] >> " CRESET,
-             i, number_of_tests, (float)i / number_of_tests * 100, (float)g / (i + 1) * 100);
+      startTime = (float)clock() / CLOCKS_PER_SEC;
+      Point p   = (test->samples)[i];
+      if(i > 0) printf(WHT "\33[2K\r[ %2.2f/s ]" CRESET, timeElapsed / (i + 1));
+      printf(CYNB "[ %d/%d ( %-2.2f%% ) ]" CRESET "::" YEL " Accuracy : " WHT "[" CYN " %-2.2f%%" WHT " ] - " CRESET,
+             (i + 1), number_of_tests, (float)i / number_of_tests * 100, (float)g / (i + 1) * 100);
+
       print_table_record(predicted, p.klass, p.text);
       fflush(stdout);
       predicted = kp_predict(kp, &p, best_k);
       if(predicted == p.klass) ++g;
       fprintf(fp, "%d,%s\n", predicted, p.text);
       save_csv(fp, predicted, p.text);
+
+      endTime     = (float)clock() / CLOCKS_PER_SEC;
+      timeElapsed = endTime - startTime;
     }
+
+  printf("\n");
+  printf("\n***\n\n");
+  printf("[ Calc  ] : ");
+  printf(CYNB "[ %d/%d ( %-2.2f%% ) ]" CRESET "::" YEL " Accuracy : " WHT "[" CYN " %-2.2f%%" WHT " ]\n\n" CRESET,
+         (i + 1), number_of_tests, (float)i / number_of_tests * 100, (float)g / (i + 1) * 100);
+  printf(CYN "\nData loaded" CRESET " :: " YEL "Time elapsed : " WHT "[ %2.2f ]" CRESET "\n", timeElapsed);
   fclose(fp);
 
   deallocateDataset(test);
   deallocateDataset(train);
   deallocateKlassPredictor(kp);
+
   return 0;
 }
