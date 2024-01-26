@@ -79,7 +79,7 @@ void *klassify_thread(void *args)
   memset(rm, 0, sizeof(msg_result));
   memset(tm2, 0, sizeof(thread_message));
 
-  while(1)
+  while(true)
     {
       thread_message *tm = dequeue(dataQueue);
       if(tm == NULL) { continue; }
@@ -197,7 +197,7 @@ size_t kp_predict(klass_predictor *kp, Point *text, size_t k)
   int count = 0;
 
   msg_result *rm;
-  while(1)
+  while(true)
     {
       if(count == kp->number_of_cores) { break; }
       for(size_t i = 0; i < kp->number_of_cores; ++i)

@@ -51,6 +51,7 @@ void choose_accuracy(int *good_predictions, dataset *test, int number_of_tests, 
       *best_k        = k;
     }
 }
+
 void print_table_footer()
 {
   for(int i = 0; i < 100; ++i) { printf("-"); }
@@ -72,32 +73,23 @@ int main(int argc, char **argv)
   int   number_of_tests  = 0;
   int   best_k           = 0;
   float best_accuracy    = 0.0;
-  printf("\033[2J\033[1;1H");
 
+  klass_predictor *kp = allocateKlassPredictor();
+  printf("\033[2J\033[1;1H");
   float startTime = (float)clock() / CLOCKS_PER_SEC;
 
+  dataset *test  = get_dataset(TEST_PATH);
+  dataset *train = get_dataset(TRAIN_PATH);
+
+  kp                = kp_init(train, test, 2);
+  kp->klasses       = klasses;
+  kp->klasses_count = 4;
+  float endTime     = (float)clock() / CLOCKS_PER_SEC;
+
   fflush(stdout);
-  klass_predictor *kp    = allocateKlassPredictor();
-  dataset         *test  = get_dataset(TEST_PATH);
-  dataset         *train = get_dataset(TRAIN_PATH);
-  kp                     = kp_init(train, test, 2);
-  kp->klasses            = klasses;
-  kp->klasses_count      = 4;
-  float endTime          = (float)clock() / CLOCKS_PER_SEC;
 
   float timeElapsed = endTime - startTime;
   printf(CYN "\nData loaded" CRESET " :: " YEL "Time elapsed : " WHT "[ %2.2f ]" CRESET "\n", timeElapsed);
-
-  // calculate best k
-  // for(int k = 2; k <= 2; k++)
-  //   {
-  //     choose_accuracy(&good_predictions, test, number_of_tests, k, kp, &best_accuracy, &best_k);
-  //   }
-  // printf("\33[2K\r");
-  // fflush(stdout);
-  // printf(CYN "\33[2K\n[ Best k is " REDB "%2d" CYN " (Acc:" RED " %2.2f%%" CYN ")]" CRESET " :: "
-  //            "( Based on " RED "%zu" CRESET " samples )\n",
-  //        best_k, best_accuracy, number_of_tests);
 
   best_k = 2;
 
@@ -118,7 +110,7 @@ int main(int argc, char **argv)
   printf("[ Calc  ] : ");
   int i       = 0;
   timeElapsed = 0;
-  for(i = 0; i < 5; i++)
+  for(i = 0; i < number_of_tests; i++)
     {
       startTime = (float)clock() / CLOCKS_PER_SEC;
       Point p   = (test->samples)[i];
@@ -151,3 +143,13 @@ int main(int argc, char **argv)
 
   return 0;
 }
+// calculate best k
+// for(int k = 2; k <= 2; k++)
+//   {
+//     choose_accuracy(&good_predictions, test, number_of_tests, k, kp, &best_accuracy, &best_k);
+//   }
+// printf("\33[2K\r");
+// fflush(stdout);
+// printf(CYN "\33[2K\n[ Best k is " REDB "%2d" CYN " (Acc:" RED " %2.2f%%" CYN ")]" CRESET " :: "
+//            "( Based on " RED "%zu" CRESET " samples )\n",
+//        best_k, best_accuracy, number_of_tests);
