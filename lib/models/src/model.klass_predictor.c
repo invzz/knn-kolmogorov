@@ -12,7 +12,7 @@ klass_predictor *allocateKlassPredictor()
       fprintf(stderr, "Memory allocation failed for klass_predictor\n");
       exit(EXIT_FAILURE);
     }
-  newPredictor->nprocs        = 0;
+  newPredictor->number_of_cores        = 0;
   newPredictor->chunk_size    = 0;
   newPredictor->chunk_rem     = 0;
   newPredictor->train_count   = 0;

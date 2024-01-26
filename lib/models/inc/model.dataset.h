@@ -6,9 +6,8 @@
 
 typedef struct data_array_s
 {
-  int    size;
-  int    capacity;
-  int    index;
+  int size;
+  int capacity;
   Point *samples;
 } dataset;
 

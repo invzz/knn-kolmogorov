@@ -5,7 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#ifndef TEST_PATH
+#define TEST_PATH "data/ag_news_csv/test.csv"
+#endif
+#ifndef TRAIN_PATH
+#define TRAIN_PATH "data/ag_news_csv/train.csv"
+#endif
 static char *klasses[] = {"world", "sports", "business", "sci/tech"};
 char *template =
   REDB "[ %2.2f%% ]" CRESET " :: " RED "[ Neighbours = %zu ]" CRESET " :: " CYN "[ %2.2d ]-[ %-9.9s ]" CRESET " ::"
@@ -20,7 +25,7 @@ void choose_accuracy(int *good_predictions, dataset *test, int number_of_tests, 
   int  predicted    = 0;
   int  actual       = 0;
   int  g            = *good_predictions;
-  char OUTPUT_BUFFER[BUFSIZ];
+  char OUTPUT_BUFFER[KNN_BUFFER_SIZE];
   // for each sample in the test set
   for(int i = 0; i < number_of_tests; i++)
     {

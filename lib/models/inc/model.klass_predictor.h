@@ -9,7 +9,7 @@ typedef struct klass_predictor_s
 {
   char         **klasses;
   int            klasses_count;
-  int            nprocs;
+  int            number_of_cores;
   int            train_count;
   int            chunk_size;
   int            chunk_rem;

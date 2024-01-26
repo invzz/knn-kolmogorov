@@ -89,6 +89,20 @@ if(NOT DEFINED VCPKG_ROOT)
     endif()
 endif()
 
+macro (vcpkg_integrate_install) 
+    if(WIN32)
+        set(VCPKG_EXEC ${VCPKG_ROOT}/vcpkg.exe)
+        set(VCPKG_BOOTSTRAP ${VCPKG_ROOT}/bootstrap-vcpkg.bat)
+    else()
+        set(VCPKG_EXEC ${VCPKG_ROOT}/vcpkg)
+        set(VCPKG_BOOTSTRAP ${VCPKG_ROOT}/bootstrap-vcpkg.sh)
+    endif()
+
+    execute_process(COMMAND ${VCPKG_EXEC} integrate install WORKING_DIRECTORY ${VCPKG_ROOT})
+endmacro()
+
+
+
 # Installs a new copy of Vcpkg or updates an existing one
 macro(vcpkg_bootstrap)
     _install_or_update_vcpkg()

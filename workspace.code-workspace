@@ -42,6 +42,7 @@
         // "cmake.configureSettings": {
         //     "CMAKE_TOOLCHAIN_FILE": "/home/invzz/vcpkg/scripts/buildsystems/vcpkg.cmake"
         // },
+   "files.encoding": "utf8",
         "files.exclude": {
             "**/.git": true,
             "**/build": true,
@@ -170,12 +171,14 @@
             "queue.h": "c",
             "model.distancepoint.h": "c",
             "model.kp_state.h": "c",
-            "model.point.h": "c"
+            "model.point.h": "c",
+            "signal.h": "c",
+            "pthread.h": "c",
+            "windows.h": "c"
         },
         "cmake.debugConfig": {
-            "args": [
-                "../../resources/dataset.json"
-            ]
+            "args": [],
+            "console": "integratedTerminal",
         }
     },
 }

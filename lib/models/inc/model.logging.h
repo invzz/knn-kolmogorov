@@ -4,7 +4,7 @@
 #ifdef DEBUG
 #define DEBUG_PRINT(fmt, ...)                                                                                          \
   do {                                                                                                                 \
-      fprintf(stout, fmt, ##__VA_ARGS__);                                                                              \
+      fprintf(stdout, fmt, ##__VA_ARGS__);                                                                             \
   } while(0)
 #else
 #define DEBUG_PRINT(fmt, ...)                                                                                          \

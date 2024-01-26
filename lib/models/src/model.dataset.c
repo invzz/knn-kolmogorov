@@ -15,7 +15,6 @@ dataset *allocateDataset(int capacity)
     }
   newDataset->size     = 0;
   newDataset->capacity = capacity;
-  newDataset->index    = 0;
   newDataset->samples  = (Point *)calloc(capacity, sizeof(Point));
   if(newDataset->samples == NULL)
     {
